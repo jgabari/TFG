@@ -12,10 +12,13 @@
     <br><br>
     <button id="new_btn">New square</button>
     <button id="improve_btn">Improve squares</button>
+    <p>Hours:</p><p id="money">1000</p>
     <script>
         // Get the canvas context
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
+
+        const display = document.getElementById("money");
 
         // Variables
         let squares = [];
@@ -23,7 +26,7 @@
         let x = 0;
         let y = 0;
         let brightness = 128;
-        let money = 500;
+        let money = 1000;
 
         function reDraw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -67,6 +70,9 @@
                 x = 0;
                 y += squareSize;
             }
+            // Aply the price
+            money -= 10;
+            display.innerHTML = money;
             // Add the new square and redraw the canvas
             squares.push({x, y, brightness});
             reDraw();
@@ -79,7 +85,9 @@
                 if (square.brightness < 235) {
                     square.brightness += 30;
                 }
+                money -= 5;
             });
+            display.innerHTML = money;
             reDraw();
         });
     </script>
