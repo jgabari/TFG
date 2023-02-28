@@ -24,15 +24,19 @@
         let y = 0;
         let brightness = 128;
         let money = 500;
-        
-        function drawSquare(x, y, brightness) {
-            ctx.fillStyle = `rgb(0, ${brightness}, 0)`;
-            ctx.fillRect(x, y, squareSize, squareSize);
-            squares.push({ x, y, brightness });
+
+        function reDraw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            squares.forEach(square => {
+                ctx.fillStyle = `rgb(0, ${square.brightness}, 0)`;
+                ctx.fillRect(square.x, square.y, squareSize, squareSize);
+                //squares.push({ x, y, brightness });
+            });
         }
         
         // Initial square
-        drawSquare(x, y, brightness);
+        squares.push({x, y, brightness});
+        reDraw();
         
         // New square button
         document.getElementById("new_btn").addEventListener("click", function() {
@@ -65,12 +69,7 @@
             }
             // Add the new square and redraw the canvas
             squares.push({x, y, brightness});
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = "50px arial";
-            ctx.fillText(money, 0, 0);
-            squares.forEach(square => {
-                drawSquare(square.x, square.y, square.brightness);
-            });
+            reDraw();
         });
         
         // Improvement button
@@ -81,13 +80,7 @@
                     square.brightness += 30;
                 }
             });
-            // Redraw the canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.font = "50px arial";
-            ctx.fillText(money, 0, 0);
-            squares.forEach(square => {
-                drawSquare(square.x, square.y, square.brightness);
-            });
+            reDraw();
         });
     </script>
 </body>
