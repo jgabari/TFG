@@ -89,7 +89,7 @@ const server = http.createServer((req, res) => {
             res.setHeader('Set-Cookie', ["user="+nickname, "password="+password]);
             fichero = 'game.html';
         } else {
-            new_user = { "nickname": nickname, "password": password };
+            new_user = { "nickname": nickname, "password": password, "squares":[] };
             users['users'].push(new_user);
             users_json = JSON.stringify(users);
             fs.writeFileSync(FICHERO_JSON, users_json);
