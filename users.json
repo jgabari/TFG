@@ -1,8 +1,13 @@
 {
     "users": [
         {
+            "nickname": "user0",
+            "password": "user0pswd",
+            "squares": []
+        },
+        {
             "nickname": "user1",
-            "password": "password",
+            "password": "user1pswd",
             "squares": []
         }
     ]
