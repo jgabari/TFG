@@ -13,6 +13,7 @@
     <button id="new_btn">New square</button>
     <button id="improve_btn">Improve squares</button>
     <p>Hours:</p><p id="money">1000</p>
+    <button id="save_btn">Save & exit</button>
     <script>
         const fs = require('fs');
 
@@ -44,8 +45,30 @@
 
         let user = getCookie("user");
         let password = getCookie("password");
+        console.log("user: "+user);
+        console.log("password: "+password);
 
         // Get the game progress from the JSON________________________________________________________________________________________________________________
+        // Create object to make AJAX requests
+        const m = new XMLHttpRequest();
+        // Funcion de callback que se invoca cuando hay cambios de estado en la peticion
+        m.onreadystatechange = () => {
+            // Peticion enviada y recibida, OK
+            if (m.readyState==4) {
+                // Solo la procesamos si la respuesta es correcta
+                if (m.status==200) {
+                    // Recuperar los datos
+                } else {
+                    // Error al recuperar los datos
+                }
+            }
+        }
+        // Configurar la petición
+        m.open("GET", "/progress?nickname="+user+"&password="+password, true);
+        // Enviar la petición
+        m.send();
+
+
         const FICHERO_JSON = 'users.json';
         let users_json = fs.readFileSync(FICHERO_JSON);
         let users = JSON.parse(users_json);
@@ -72,8 +95,10 @@
             }
         }
         
-        // Initial square
-        squares.push({x, y, brightness});
+        // Initial situation
+        if (squares.length === 0) {
+            squares.push({x, y, brightness});
+        }
         reDraw();
         
         // New square button
@@ -127,6 +152,12 @@
             reDraw();
 
         });
+
+        // Save & exit button
+        document.getElementById("save_btn").addEventListener("click", function() {
+            
+        })
+
     </script>
 </body>
 </html>
