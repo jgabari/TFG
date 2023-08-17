@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <br><br>
+    <button id="new_btn">New square</button>
+    <button id="improve_btn">Improve squares</button>
+    <script>
+        // Get the canvas context
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Variables
+        let squares = [{
+                    "x": 0,
+                    "y": 0,
+                    "brightness": 128
+                },
+                {
+                    "x": 100,
+                    "y": 100,
+                    "brightness": 128
+                }];
+        let squareSize = 100;
+        let x = 0;
+        let y = 0;
+        let brightness = 128;
+        
+        function drawSquare(x, y, brightness) {
+            ctx.fillStyle = `rgb(0, ${brightness}, 0)`;
+            ctx.fillRect(x, y, squareSize, squareSize);
+            squares.push({ x, y, brightness });
+        }
+        
+        // Initial square
+        drawSquare(x, y, brightness);
+        
+        // New square button
+        document.getElementById("new_btn").addEventListener("click", function() {
+            // Check if a square is too dark to continue and display an alert in that case
+            let improvementRequired = false;
+            squares.forEach(square => {
+                if (square.brightness <= 30) {
+                    improvementRequired = true;
+                }
+            });
+            if (improvementRequired) {
+                alert("A square is too dark to continue! Improve your project.");
+                improvementRequired = false;
+                // The rest of the function does not execute
+                return;
+            }
+            // If no improvement is needed
+            squares.forEach(square => {
+                    square.brightness -= 30;
+            });
+            x += squareSize;
+            // Check if there is enough space for the new square
+            if (x + squareSize > canvas.width) {
+                if (y + squareSize >= canvas.height) {
+                    alert("Congrats! Your project is complete.");
+                    return;
+                }
+                x = 0;
+                y += squareSize;
+            }
+            // Add the new square and redraw the canvas
+            squares.push({x, y, brightness});
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            squares.forEach(square => {
+                drawSquare(square.x, square.y, square.brightness);
+            });
+        });
+        
+        // Improvement button
+        document.getElementById("improve_btn").addEventListener("click", function() {
+            // Increase brightness of all the squares
+            squares.forEach(square => {
+                if (square.brightness < 235) {
+                    square.brightness += 30;
+                }
+            });
+            // Redraw the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            squares.forEach(square => {
+                drawSquare(square.x, square.y, square.brightness);
+            });
+        });
+    </script>
+</body>
+</html>
