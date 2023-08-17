@@ -3,12 +3,34 @@
         {
             "nickname": "user0",
             "password": "user0pswd",
-            "squares": []
+            "squares": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "brightness": 128
+                }
+            ]
         },
         {
-            "nickname": "user1",
-            "password": "user1pswd",
-            "squares": []
+            "nickname": "prueba",
+            "password": "prueba",
+            "squares": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "brightness": 68
+                },
+                {
+                    "x": 100,
+                    "y": 0,
+                    "brightness": 98
+                },
+                {
+                    "x": 200,
+                    "y": 0,
+                    "brightness": 128
+                }
+            ]
         }
     ]
 }

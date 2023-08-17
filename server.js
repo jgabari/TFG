@@ -22,10 +22,17 @@ const pagina_error = `
 const FICHERO_JSON = 'users.json';
 let users_json = fs.readFileSync(FICHERO_JSON);
 let users = JSON.parse(users_json);
-let users_list = [];
-users.users.forEach((element) => {
-    users_list.push(element.nombre);
-})
+// let users_list = [];
+// users.users.forEach((element) => {
+//     users_list.push(element.nombre);
+// })
+    //Inicialización de variables
+    let fichero = '';
+    let nickname = '';
+    let password = '';
+    let squares = [];
+    let squares_encoded = '';
+    let cookie = '';
 
 const server = http.createServer((req, res) => {
 
@@ -41,16 +48,7 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://' + req.headers['host']);
     console.log('RECURSO PEDIDO: ' + url.pathname);
 
-    //Inicialización de variables
-    let fichero = '';
-    let nickname = '';
-    let password = '';
-    let direccion = '';
-    let tarjeta = '';
-    let nuevo_pedido = {};
-    let cookie = '';
-    let cookie_carrito = 'carrito=';
-    let carrito = [];
+
 
     //Extraigo las cookies si las hay
     cookie = req.headers.cookie;
@@ -81,12 +79,14 @@ const server = http.createServer((req, res) => {
         for (i = 0; i < users.users.length; i++) {
             if (users.users[i].nickname == nickname) {
                 if (users.users[i].password == password) {
+                    squares = users.users[i].squares;
                     found = true;
                 }
             }
         }
         if (found == true) {
-            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password]);
+            squares_encoded = JSON.stringify(squares);
+            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password, "progress="+squares_encoded]);
             fichero = 'game.html';
         } else {
             new_user = { "nickname": nickname, "password": password, "squares":[] };
@@ -109,6 +109,30 @@ const server = http.createServer((req, res) => {
         // if (nickname) {
         //     fichero = 'yalogeado.html';
         // }
+    } else if (url.pathname == '/saveexit') {
+        fichero = 'index.html';
+        let progressData = '';
+        req.on('data', chunk => {
+            progressData += chunk;
+        })
+
+        req.on('end', () => {
+            console.log("Datos de Progreso recibidos: ");
+            console.log(progressData);
+            let progressJSON = JSON.parse(progressData);
+            for (i = 0; i < users.users.length; i++) {
+                if (users.users[i].nickname == nickname) {
+                    if (users.users[i].password == password) {
+                        users.users[i].squares = progressJSON;
+                        users_json = JSON.stringify(users);
+                        fs.writeFileSync(FICHERO_JSON, users_json);
+                        console.log("Datos de progreso guardados!");
+                    }
+                }
+            }
+
+        })
+
     // } else if (url.pathname == '/carrito_x100pre') {
     //     if (nickname) {
     //         cookie_carrito += "x100pre:"
