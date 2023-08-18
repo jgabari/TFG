@@ -47,16 +47,21 @@ function noMoney(money) {
 // Initial situation
 user = getCookie("user");
 password = getCookie("password");
+money = getCookie("money");
 console.log("user: " + user);
 console.log("password: " + password);
+console.log("money: " + money);
 squares_encoded = getCookie("progress");
 if (squares_encoded) {
     squares = JSON.parse(squares_encoded);
+    x = squares[squares.length - 1].x;
+    y = squares[squares.length - 1].y;
 }
 if (squares.length == 0) {
     squares.push({x, y, brightness});
 }
 reDraw();
+display.innerHTML = money;
 
 // New square button
 document.getElementById("new_btn").addEventListener("click", function() {
@@ -112,7 +117,7 @@ document.getElementById("improve_btn").addEventListener("click", function() {
 
 // Save & exit button
 document.getElementById("save_btn").addEventListener("click", function() {
-    fetch('/saveexit?nick='+user+'pswd='+password, {
+    fetch('/saveexit?money='+money, {
         method: "POST",
         body: JSON.stringify(squares),
         headers: {"Content-Type": "application/json"}

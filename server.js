@@ -22,17 +22,16 @@ const pagina_error = `
 const FICHERO_JSON = 'users.json';
 let users_json = fs.readFileSync(FICHERO_JSON);
 let users = JSON.parse(users_json);
-// let users_list = [];
-// users.users.forEach((element) => {
-//     users_list.push(element.nombre);
-// })
-    //Inicialización de variables
-    let fichero = '';
-    let nickname = '';
-    let password = '';
-    let squares = [];
-    let squares_encoded = '';
-    let cookie = '';
+
+//Inicialización de variables
+let fichero = '';
+let nickname = '';
+let password = '';
+let money = 1000;
+let money_encoded = '';
+let squares = [];
+let squares_encoded = '';
+let cookie = '';
 
 const server = http.createServer((req, res) => {
 
@@ -60,6 +59,8 @@ const server = http.createServer((req, res) => {
                 nickname = valor;
             } else if (nombre.trim() === 'password') {
                 password = valor;
+            } else if (nombre.trim() === 'money') {
+                money = parseInt(valor);
             }
         });
     }
@@ -80,37 +81,29 @@ const server = http.createServer((req, res) => {
             if (users.users[i].nickname == nickname) {
                 if (users.users[i].password == password) {
                     squares = users.users[i].squares;
+                    money = users.users[i].money;
                     found = true;
                 }
             }
         }
         if (found == true) {
             squares_encoded = JSON.stringify(squares);
-            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password, "progress="+squares_encoded]);
+            money_encoded = money.toString();
+            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password, "money="+money_encoded, "progress="+squares_encoded]);
             fichero = 'game.html';
         } else {
-            new_user = { "nickname": nickname, "password": password, "squares":[] };
+            new_user = { "nickname": nickname, "password": password, "money": 1000, "squares":[{"x":0,"y":0,"brightness":128}] };
             users['users'].push(new_user);
             users_json = JSON.stringify(users);
             fs.writeFileSync(FICHERO_JSON, users_json);
-            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password]);
+            res.setHeader('Set-Cookie', ["user="+nickname, "password="+password, "money=" + money.toString()]);
             fichero = 'game.html';
         }
-    // } else if (url.pathname == '/finalizar') {
-    //     fichero = 'compra_realizada.html';
-    //     direccion = url.searchParams.get('direccion');
-    //     tarjeta = url.searchParams.get('tarjeta');
-    //     nuevo_pedido = {"nickname": nickname,"direccion":direccion,"tarjeta":tarjeta,"producto":carrito};
-    //     users['pedidos'].push(nuevo_pedido);
-    //     users_json = JSON.stringify(users);
-    //     fs.writeFileSync(FICHERO_JSON, users_json);
     } else if (url.pathname == '/login.html') {
         fichero = 'login.html';
-        // if (nickname) {
-        //     fichero = 'yalogeado.html';
-        // }
     } else if (url.pathname == '/saveexit') {
         fichero = 'index.html';
+        money = url.searchParams.get('money');
         let progressData = '';
         req.on('data', chunk => {
             progressData += chunk;
@@ -124,6 +117,7 @@ const server = http.createServer((req, res) => {
                 if (users.users[i].nickname == nickname) {
                     if (users.users[i].password == password) {
                         users.users[i].squares = progressJSON;
+                        users.users[i].money = money;
                         users_json = JSON.stringify(users);
                         fs.writeFileSync(FICHERO_JSON, users_json);
                         console.log("Datos de progreso guardados!");
@@ -132,39 +126,6 @@ const server = http.createServer((req, res) => {
             }
 
         })
-
-    // } else if (url.pathname == '/carrito_x100pre') {
-    //     if (nickname) {
-    //         cookie_carrito += "x100pre:"
-    //         res.setHeader('Set-Cookie', cookie_carrito);
-    //     }
-    //     fichero = 'producto1.html';
-    // } else if (url.pathname == '/carrito_yhlqmdlg') {
-    //     if (nickname) {
-    //         cookie_carrito += "yhlqmdlg:"
-    //         res.setHeader('Set-Cookie', cookie_carrito);
-    //     }
-    //     fichero = 'producto2.html';
-    // } else if (url.pathname == '/carrito_ultimotour') {
-    //     if (nickname) {
-    //         cookie_carrito += "elultimotourdelmundo:";
-    //         res.setHeader('Set-Cookie', cookie_carrito);
-    //     }
-    //     fichero = 'producto3.html';
-    // } else if (url.pathname == '/busqueda') {
-    //     fichero = 'index.html';
-    // } else if (url.pathname == '/buscar') {
-    //     let se_busca = url.searchParams.get('producto');
-    //     se_busca = se_busca.toUpperCase();
-    //     if (se_busca == 'X100PRE') {
-    //         fichero = 'producto1.html';
-    //     } else if (se_busca == 'YHLQMDLG') {
-    //         fichero = 'producto2.html';
-    //     } else if (se_busca == 'ELULTIMOTOURDELMUNDO') {
-    //         fichero = 'producto3.html';
-    //     } else {
-    //         fichero = 'index.html';
-    //     }
     } else {
         fichero = url.pathname.slice(1);
     }
@@ -203,47 +164,6 @@ const server = http.createServer((req, res) => {
                 res.setHeader('Content-Type', 'application/javascript');
             }
             page = data;
-            // if (/* fichero == 'bienvenida.html' ||  */fichero == 'login_error.html'/*  || fichero == 'yalogeado.html' */) {
-            //     page = page.toString().replace("USUARIO", nickname);
-            // } else if (fichero == 'index.html') {
-            //     if (url.pathname == '/busqueda') {
-            //         res.setHeader('Content-Type', "application/json");
-            //         //-- Leer los parámetros
-            //         let param1 = url.searchParams.get('param1');
-            //         param1 = param1.toUpperCase();
-            //         let result = [];
-            //         for (let prod of users_list) {
-            //             //-- Pasar a mayúsculas
-            //             prodU = prod.toUpperCase();
-            //             //-- Si el producto comienza por lo indicado en el parametro
-            //             //-- meter este producto en el array de resultados
-            //             if (prodU.startsWith(param1)) {
-            //                 result.push(prod);
-            //             }
-            //         }
-            //         page = JSON.stringify(result);
-            //     } else if (nickname) {
-            //         const ENLACE_LOGIN = '<a id="botonlogin" href="login.html">LOGIN</a>';
-            //         const NOMBRE_USUARIO = '<a id="botonlogin" href="yalogeado.html">' + nickname + '</a>';
-            //         page = page.toString().replace(ENLACE_LOGIN, NOMBRE_USUARIO);
-            //     }
-            // } else if (fichero == 'finalizar_compra.html') {
-            //     let LISTACARRITO = '<ul>';
-            //     carrito.forEach((element) => {
-            //         LISTACARRITO += '<li>'+element+'</li>';
-            //     })
-            //     LISTACARRITO += '</ul>';
-            //     page = page.toString().replace('LISTACARRITO', LISTACARRITO);
-            // } else if (fichero == 'producto1.html') {
-            //     const DESCRIPCION = users.users[0].descripcion;
-            //     page = page.toString().replace('DESCRIPCIONJSON', DESCRIPCION);
-            // } else if (fichero == 'producto2.html') {
-            //     const DESCRIPCION = users.users[1].descripcion;
-            //     page = page.toString().replace('DESCRIPCIONJSON', DESCRIPCION);
-            // } else if (fichero == 'producto3.html') {
-            //     const DESCRIPCION = users.users[2].descripcion;
-            //     page = page.toString().replace('DESCRIPCIONJSON', DESCRIPCION);
-            // }
         }
         //Asigno los valores de la respuesta y la envio
         res.statusCode = code;
