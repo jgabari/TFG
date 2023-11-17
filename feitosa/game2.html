@@ -9,7 +9,7 @@
 <body>
     <div>
         <h1>Project evolution simulator</h1>
-        <div>
+        <div id="stats">
             <h2>Stats</h2>
             <h3>Project Value</h3>
             <span id="value_display"></span>
@@ -18,7 +18,7 @@
             <h3>Bugs</h3>
             <span id="bugs_display"></span>
         </div>
-        <div>
+        <div id="budget">
             <div>
                 <h2>Budget</h2>
                 <span id="budget_display"></span>
@@ -28,6 +28,12 @@
                 <input type="range" name="Fix Bugs" id="bugs_input">
                 <input type="range" name="Improve Health" id="health_input">
             </div>
+        </div>
+        <div id="buttons">
+            <button id="iterate_btn">Iterate</button>
+            <button id="reset_btn">Reset</button>
+            <button id="download_btn">Download state</button>
+            <button id="upload_btn">Upload state</button>
         </div>
     </div>
 </body>
