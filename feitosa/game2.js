@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 /**
  * Class SimSys simulates the impacts of technical debt accumulation
  * over time in a software system.
@@ -155,6 +153,12 @@ const iterate_btn = document.getElementById("iterate_btn");
 const reset_btn = document.getElementById("reset_btn");
 const download_btn = document.getElementById("download_btn");
 const upload_btn = document.getElementById("upload_btn");
+const features_input = document.getElementById("features_input");
+const bugs_input = document.getElementById("bugs_input");
+const health_input = document.getElementById("health_input");
+const value_display = document.getElementById("value_display");
+const features_display = document.getElementById("features_display");
+const bugs_display = document.getElementById("bugs_display");
 
 // Initial situation
 let mySys = new SimSys();
@@ -171,6 +175,22 @@ if (document.cookie.indexOf("state") !== -1) {
     }
 }
 
+// Allocate the budget in the three different inputs
+features_input.addEventListener('input', updateSum("features_input"));
+bugs_input.addEventListener('input', updateSum("bugs_input"));
+health_input.addEventListener('input', updateSum("health_input"));
+
+let prevInput = "";
+
+function updateSum(input) {
+    let total = features_input.value + bugs_input.value + health_input.value;
+    if (total > 10) {
+        document.getElementById(prevInput).value -= 1;
+    }
+    prevInput = input;
+}
+
+
 iterate_btn.addEventListener("click", function() {
     mySys.runIteration(2);
     document.cookie = mySys.toString();
@@ -183,6 +203,11 @@ reset_btn.addEventListener("click", function() {
 
 download_btn.addEventListener("click", function() {
     fs.writeFileSync("state.json", mySys.toString());
+    fetch('/download', {
+        method: "POST",
+        body: mySys.toString(),
+        headers: {"Content-Type": "application/json"}
+    })
 })
 
 upload_btn.addEventListener("click", function() {

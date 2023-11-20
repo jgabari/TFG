@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechDebt</title>
-    <script src="simsys-js.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-webkit/0.10.3/node-webkit.min.js"></script>
+    <script src="game2.js"></script>
 </head>
 <body>
     <div>
@@ -24,9 +25,21 @@
                 <span id="budget_display"></span>
             </div>
             <div>
-                <input type="range" name="Add Features" id="features_input">
-                <input type="range" name="Fix Bugs" id="bugs_input">
-                <input type="range" name="Improve Health" id="health_input">
+                <p>
+                    <label for="features_input">Features:</label>
+                    <input type="range" name="Add Features" id="features_input" min="0" max="10" step="1" value="0">
+                </p>
+                <p>
+                    <label for="bugs_input">Bugs:</label>
+                    <input type="range" name="Fix Bugs" id="bugs_input" min="0" max="10" step="1" value="0">
+                </p>
+                <p>
+                    <label for="health_input">Health:</label>
+                    <input type="range" name="Improve Health" id="health_input" min="0" max="10" step="1" value="0">
+                </p>
+                <datalist id="allocated">
+                    <option value=""></option>
+                </datalist>
             </div>
         </div>
         <div id="buttons">
