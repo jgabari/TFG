@@ -202,7 +202,6 @@ reset_btn.addEventListener("click", function() {
 })
 
 download_btn.addEventListener("click", function() {
-    fs.writeFileSync("state.json", mySys.toString());
     fetch('/download', {
         method: "POST",
         body: mySys.toString(),
@@ -211,10 +210,17 @@ download_btn.addEventListener("click", function() {
 })
 
 upload_btn.addEventListener("click", function() {
-    const state = fs.readFileSync("state.json");
-    const stateJSON = JSON.parse(state);
-    mySys.iteration = stateJSON.iteration;
-    mySys.config = stateJSON.config;
-    mySys.stats = stateJSON.stats;
-    mySys.budget = stateJSON.budget;
+    fetch('/state.json', {
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+        mySys.iteration = data.iteration;
+        mySys.config = data.config;
+        mySys.stats = data.stats;
+        mySys.budget = data.budget;
+    })
+    .catch(error => {
+        console.log("ERROR: " + error);
+    })
 })

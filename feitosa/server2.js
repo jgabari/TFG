@@ -69,7 +69,13 @@ const server = http.createServer((req, res) => {
     if (url.pathname=='/') {
         fichero = 'index.html';
     } else if (url.pathname=='/download') {
-        
+        let stateData = '';
+        req.on('data', chunk => {
+            stateData += chunk;
+        })
+        req.on('end', () => {
+            fs.writeFileSync("state.json", stateData)
+        })
     }else {
         fichero = url.pathname.slice(1);
     }
@@ -100,7 +106,6 @@ const server = http.createServer((req, res) => {
                 res.setHeader('Content-Type', 'application/javascript');
             } else if (extension == 'css') {
                 res.setHeader('Content-Type', 'text/css');
-                
             }
             page = data;
         }
