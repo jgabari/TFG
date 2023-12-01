@@ -153,9 +153,12 @@ const iterate_btn = document.getElementById("iterate_btn");
 const reset_btn = document.getElementById("reset_btn");
 const download_btn = document.getElementById("download_btn");
 const upload_btn = document.getElementById("upload_btn");
-const features_input = document.getElementById("features_input");
-const bugs_input = document.getElementById("bugs_input");
-const health_input = document.getElementById("health_input");
+// const features_input = document.getElementById("features_input");
+// const features_value = document.getElementById("features_value");
+// const bugs_input = document.getElementById("bugs_input");
+// const bugs_value = document.getElementById("bugs_value");
+// const health_input = document.getElementById("health_input");
+// const health_value = document.getElementById("health_value");
 const value_display = document.getElementById("value_display");
 const features_display = document.getElementById("features_display");
 const bugs_display = document.getElementById("bugs_display");
@@ -176,19 +179,68 @@ if (document.cookie.indexOf("state") !== -1) {
 }
 
 // Allocate the budget in the three different inputs
-features_input.addEventListener('input', updateSum("features_input"));
-bugs_input.addEventListener('input', updateSum("bugs_input"));
-health_input.addEventListener('input', updateSum("health_input"));
-
-let prevInput = "";
-
-function updateSum(input) {
-    let total = features_input.value + bugs_input.value + health_input.value;
+let inputs = ["features_input", "bugs_input", "health_input"];
+let sliders = inputs.map(id => document.getElementById(id));
+let values = inputs.map(id => id.replace("input", "value"));
+sliders.forEach(input => input.addEventListener("input", updateSum));
+let prevInputs = [];
+function updateSum(ev) {
+    let total = sliders.reduce((sum, slider) => sum + parseInt(slider.value), 0);
     if (total > 10) {
-        document.getElementById(prevInput).value -= 1;
+        let diff = total - 10;
+        for (let i = prevInputs.length - 1; i >= 0 && diff > 0; i--) {
+            let value = parseInt(prevInputs[i].value);
+            if (value >= diff) {
+                prevInputs[i].value = value - diff;
+                diff = 0; 
+            } else {
+                prevInputs[i].value = 0;
+                diff -= value;
+            }
+        }
     }
-    prevInput = input;
+    values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+    if (prevInputs[prevInputs.length - 1] !== ev.target) {
+        prevInputs.push(ev.target);
+    }
+    while (prevInputs.length > sliders.length) {
+        prevInputs.shift();
+    }
 }
+
+// features_input.addEventListener("input", () => updateSum("features_input"));
+// bugs_input.addEventListener("input", () => updateSum("bugs_input"));
+// health_input.addEventListener("input", () => updateSum("health_input"));
+
+// let prevInput;
+// let prevprevInput;
+// let prevprevprevInput;
+// let total;
+
+// function updateSum(input) {
+//     if (document.getElementById(input)===prevInput) {
+//         prevInput = prevprevInput;
+//         prevprevInput = prevprevprevInput;
+//     }
+//     total = parseInt(features_input.value) + parseInt(bugs_input.value) + parseInt(health_input.value);
+//     if (total > 10) {
+//         prevInput.value -= (total - 10);
+//         total = parseInt(features_input.value) + parseInt(bugs_input.value) + parseInt(health_input.value);
+//         if(total > 10) {
+//             prevprevInput.value -= (total - 10);
+//             total = parseInt(features_input.value) + parseInt(bugs_input.value) + parseInt(health_input.value);
+//             if (total > 10) {
+//                 prevprevprevInput.value -= (total - 10);
+//             }
+//         }
+//     }
+//     features_value.textContent = features_input.value;
+//     bugs_value.textContent = bugs_input.value;
+//     health_value.textContent = health_input.value;
+//     prevprevprevInput = prevprevInput;
+//     prevprevInput = prevInput;
+//     prevInput = document.getElementById(input);
+// }
 
 
 iterate_btn.addEventListener("click", function() {

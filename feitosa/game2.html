@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechDebt</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/node-webkit/0.10.3/node-webkit.min.js"></script>
-    <script src="game2.js"></script>
+    <script src="game2.js" defer></script>
 </head>
 <body>
     <div>
@@ -26,20 +26,17 @@
             </div>
             <div>
                 <p>
-                    <label for="features_input">Features:</label>
-                    <input type="range" name="Add Features" id="features_input" min="0" max="10" step="1" value="0">
+                    <label for="features_input">Features: <output id="features_value"></label>
+                    <input type="range" name="Add Features" id="features_input" class="slider" min="0" max="10" step="1" value="0">
                 </p>
                 <p>
-                    <label for="bugs_input">Bugs:</label>
-                    <input type="range" name="Fix Bugs" id="bugs_input" min="0" max="10" step="1" value="0">
+                    <label for="bugs_input">Bugs: <output id="bugs_value"></output></label>
+                    <input type="range" name="Fix Bugs" id="bugs_input" class="slider" min="0" max="10" step="1" value="0">
                 </p>
                 <p>
-                    <label for="health_input">Health:</label>
-                    <input type="range" name="Improve Health" id="health_input" min="0" max="10" step="1" value="0">
+                    <label for="health_input">Health: <output id="health_value"></output></label>
+                    <input type="range" name="Improve Health" id="health_input" class="slider" min="0" max="10" step="1" value="0">
                 </p>
-                <datalist id="allocated">
-                    <option value=""></option>
-                </datalist>
             </div>
         </div>
         <div id="buttons">

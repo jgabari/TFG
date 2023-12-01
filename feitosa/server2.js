@@ -106,6 +106,8 @@ const server = http.createServer((req, res) => {
                 res.setHeader('Content-Type', 'application/javascript');
             } else if (extension == 'css') {
                 res.setHeader('Content-Type', 'text/css');
+            } else if (extension == 'json') {
+                res.setHeader('Content-Type', 'application/json');
             }
             page = data;
         }
