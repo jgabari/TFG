@@ -96,6 +96,7 @@ class SimSys {
         s.health = Math.min(this.MAX_HEALTH, s.health);
         s.health = Math.max(this.MIN_HEALTH, s.health);
         s.health = this.round(s.health, round);
+        health_display.textContent = s.health;
 
         if (s.health === 0) {
             throw new Error("Your system became unmaintainable and collapsed.");
@@ -104,6 +105,7 @@ class SimSys {
         // Update features status
         s.features = s.features + b.feature * s.health * f.fae;
         s.features = this.round(s.features, round);
+        features_display.textContent = s.features;
 
         // Update bug status
         const fixedbugs = b.bugfix * s.health * f.bfe;
@@ -111,12 +113,14 @@ class SimSys {
         s.bugs = s.bugs - fixedbugs + newbugs;
         s.bugs = Math.max(this.MIN_BUGS, s.bugs);
         s.bugs = this.round(s.bugs, round);
+        bugs_display.textContent = s.bugs;
 
         // Calculate system value
         const featuremerit = s.features * f.vf;
         const bugthreat = s.bugs * f.vb;
         s.value = featuremerit - bugthreat;
         s.value = this.round(s.value, round);
+        value_display.textContent = s.value;
 
         // Calculate available budget for the next iteration
         b.available = s.value * f.bm;
@@ -173,6 +177,9 @@ class SimSys {
         while (prevInputs.length > sliders.length) {
             prevInputs.shift();
         }
+        mySys.budget["feature"] = parseInt(sliders[0].value);
+        mySys.budget["bugfix"] = parseInt(sliders[1].value);
+        mySys.budget["refactor"] = parseInt(sliders[2].value);
     }
 }
 
@@ -184,6 +191,7 @@ const upload_btn = document.getElementById("upload_btn");
 const value_display = document.getElementById("value_display");
 const features_display = document.getElementById("features_display");
 const bugs_display = document.getElementById("bugs_display");
+const health_display = document.getElementById("health_display");
 let inputs = ["features_input", "bugs_input", "health_input"];
 let sliders = inputs.map(id => document.getElementById(id));
 let values = inputs.map(id => id.replace("input", "value"));

@@ -19,9 +19,9 @@ const pagina_error = `
 </html>
 `
 
-const FICHERO_JSON = 'state.json';
-let state_json = fs.readFileSync(FICHERO_JSON);
-let state = JSON.parse(state_json);
+// const FICHERO_JSON = 'state.json';
+// let state_json = fs.readFileSync(FICHERO_JSON);
+// let state = JSON.parse(state_json);
 
 //Inicialización de variables
 let fichero = '';
