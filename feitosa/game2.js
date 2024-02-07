@@ -198,6 +198,11 @@ let values = inputs.map(id => id.replace("input", "value"));
 // Initial situation
 let mySys = new SimSys();
 
+value_display.innerHTML = mySys.stats.value;
+features_display.innerHTML = mySys.stats.features;
+bugs_display.innerHTML = mySys.stats.bugs;
+health_display.innerHTML = mySys.stats.health;
+
 // Check the cookie
 if (document.cookie.indexOf("state") !== -1) {
     const cookies = document.cookie.split(";");
