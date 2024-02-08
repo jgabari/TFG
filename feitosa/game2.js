@@ -99,7 +99,6 @@ class SimSys {
         s.health = Math.min(this.MAX_HEALTH, s.health);
         s.health = Math.max(this.MIN_HEALTH, s.health);
         s.health = this.round(s.health, round);
-        //health_display.textContent = s.health;
 
         if (s.health === 0) {
             throw new Error("Your system became unmaintainable and collapsed.");
@@ -108,7 +107,6 @@ class SimSys {
         // Update features status
         s.features = s.features + b.feature * s.health * f.fae;
         s.features = this.round(s.features, round);
-        //features_display.textContent = s.features;
 
         // Update bug status
         const fixedbugs = b.bugfix * s.health * f.bfe;
@@ -116,14 +114,12 @@ class SimSys {
         s.bugs = s.bugs - fixedbugs + newbugs;
         s.bugs = Math.max(this.MIN_BUGS, s.bugs);
         s.bugs = this.round(s.bugs, round);
-        //bugs_display.textContent = s.bugs;
 
         // Calculate system value
         const featuremerit = s.features * f.vf;
         const bugthreat = s.bugs * f.vb;
         s.value = featuremerit - bugthreat;
         s.value = this.round(s.value, round);
-        //value_display.textContent = s.value;
 
         // Calculate available budget for the next iteration
         b.available = s.value * f.bm;
@@ -161,8 +157,8 @@ class SimSys {
 
     updateSum(ev) {
         let total = sliders.reduce((sum, slider) => sum + parseInt(slider.value), 0);
-        if (total > 10) {
-            let diff = total - 10;
+        if (total > 100) {
+            let diff = total - 100;
             for (let i = prevInputs.length - 1; i >= 0 && diff > 0; i--) {
                 if (prevInputs[i] === ev.target) {
                     i -= 1;
@@ -177,16 +173,17 @@ class SimSys {
                 }
             }
         }
-        values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+        percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+        values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value*mySys.budget.available/100);
         if (prevInputs[prevInputs.length - 1] !== ev.target) {
             prevInputs.push(ev.target);
         }
         while (prevInputs.length > sliders.length) {
             prevInputs.shift();
         }
-        mySys.budget.feature = parseInt(sliders[0].value);
-        mySys.budget.bugfix = parseInt(sliders[1].value);
-        mySys.budget.refactor = parseInt(sliders[2].value);
+        mySys.budget.feature = parseInt(sliders[0].value)*mySys.budget.available/100;
+        mySys.budget.bugfix = parseInt(sliders[1].value)*mySys.budget.available/100;
+        mySys.budget.refactor = parseInt(sliders[2].value)*mySys.budget.available/100;
     }
 
     updateDisplays(stats) {
@@ -210,6 +207,7 @@ const budget_display = document.getElementById("budget_display");
 let inputs = ["features_input", "bugs_input", "refactor_input"];
 let sliders = inputs.map(id => document.getElementById(id));
 let values = inputs.map(id => id.replace("input", "value"));
+let percents = inputs.map(id => id.replace("input", "percent"));
 // Initial situation
 let mySys = new SimSys();
 
@@ -239,7 +237,8 @@ iterate_btn.addEventListener("click", function () {
 reset_btn.addEventListener("click", function () {
     mySys.resetSimulation();
     sliders.forEach(slider => slider.value = 0);
-    values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+    percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+    values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value*mySys.budget.available/100);
     document.cookie = mySys.toString();
 })
 
