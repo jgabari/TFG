@@ -70,7 +70,7 @@ class SimSys {
         };
 
         // Show the values in screen
-        this.updateDisplays(this.stats);
+        this.updateDisplays();
     }
 
     /**
@@ -126,7 +126,7 @@ class SimSys {
         b.available = this.round(b.available, round);
 
         // Show the values in screen
-        this.updateDisplays(s);
+        this.updateDisplays();
         budget_display.innerHTML = b.available;
     }
 
@@ -186,11 +186,12 @@ class SimSys {
         mySys.budget.refactor = parseInt(sliders[2].value)*mySys.budget.available/100;
     }
 
-    updateDisplays(stats) {
-        value_display.innerHTML = stats.value;
-        features_display.innerHTML = stats.features;
-        bugs_display.innerHTML = stats.bugs;
-        health_display.innerHTML = stats.health;
+    updateDisplays() {
+        value_display.innerHTML = this.stats.value;
+        features_display.innerHTML = this.stats.features;
+        bugs_display.innerHTML = this.stats.bugs;
+        health_display.innerHTML = this.stats.health;
+        budget_display.innerHTML = this.budget.available;
     }
 }
 
