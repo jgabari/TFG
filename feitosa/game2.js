@@ -174,7 +174,7 @@ class SimSys {
             }
         }
         percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
-        values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value*mySys.budget.available/100);
+        values.forEach((id, i) => document.getElementById(id).textContent = mySys.round((sliders[i].value*mySys.budget.available/100), 2));
         if (prevInputs[prevInputs.length - 1] !== ev.target) {
             prevInputs.push(ev.target);
         }
