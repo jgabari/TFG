@@ -12,26 +12,30 @@
 </head>
 
 <body>
-    <div id="main">
-        <header>
-            <h1>Project evolution simulator</h1>
-        </header>
-        <div id="stats">
-            <div class="title">
-                <h2>Stats</h2>
-            </div>
-            <h3>Project Value</h3>
-            <span id="value_display"></span>
-            <h3>Features</h3>
-            <span id="features_display"></span>
-            <h3>Bugs</h3>
-            <span id="bugs_display"></span>
-            <h3>Health</h3>
-            <span id="health_display"></span>
-        </div>
-        <div id="budget">
+    <main>
+        <h1>Project evolution simulator</h1>
+        <h2>Stats</h2>
+        <section id="stats">
             <div>
-                <h2>Budget</h2>
+                <h3>Value</h3>
+                <span id="value_display"></span>
+            </div>
+            <div>
+                <h3>Features</h3>
+                <span id="features_display"></span>
+            </div>
+            <div>
+                <h3>Bugs</h3>
+                <span id="bugs_display"></span>
+            </div>
+            <div>
+                <h3>Health</h3>
+                <span id="health_display"></span>
+            </div>
+        </section>
+        <h2>Budget</h2>
+        <section id="budget">
+            <div>
                 <p>Available: </p>
                 <span id="budget_display"></span>
             </div>
@@ -55,8 +59,8 @@
                         step="1" value="0">
                 </p>
             </div>
-        </div>
-        <div id="buttons">
+        </section>
+        <section id="buttons">
             <div id="game_buttons">
                 <button id="iterate_btn">Iterate</button>
                 <button id="reset_btn">Reset</button>
@@ -65,8 +69,8 @@
                 <button id="download_btn">Download state</button>
                 <button id="upload_btn">Upload state</button>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
 
 </html>
