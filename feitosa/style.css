@@ -3,61 +3,98 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 main {
     background: white;
     border-radius: 5px;
-    width: 80vw;
+    width: 90vw;
     max-width: 800px;
-    padding: 20px;
+    padding: 25px;
 }
 
-#stats, #budget{
+section {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
-#stats div {
+
+#buttons {
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.buttons {
+    padding: 0px;
+    background-color: #fff;
+    border: 0px;
+    flex: none;
+}
+
+div {
     background-color: rgb(243, 243, 243);
     border-radius: 5px;
     border: 1px solid lightgray;
+    padding: 20px;
+    flex: 1;
+}
+
+#stats div {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding-bottom: 20px;
-    flex: 1;
+    min-width: 100px;
 }
-#stats div:first-of-type {
-    border-radius: 50%;
+#stats #value {
+    border-radius: 5px;
     background-color: rgb(35, 35, 35);
     color: whitesmoke;
-    flex: 0.5
 }
 
 #budget div {
-    background-color: rgb(243, 243, 243);
-    border-radius: 5px;
-    border: 1px solid lightgray;
-    padding: 20px;
-    flex: 1;
+    min-width: 200px;
 }
 
-#buttons {
-    display: flex;
-    justify-content: space-between;
+#budget div:hover {
+    background-color: rgb(240, 240, 240);
 }
 
-#game_buttons button:first-of-type {
+#iterate_btn {
     background-color: rgb(255, 50, 50);
     color: whitesmoke;
 }
 
+#iterate_btn:hover {
+    background-color: rgb(255, 80, 80);
+}
+
+#iterate_btn:active {
+    background-color: rgb(200, 0, 0);
+}
+
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+button:hover {
+    background-color: rgb(80, 80, 80);
+    color: whitesmoke;
+}
+
+button:active {
+    background-color: black;
+}
+
 input {
     width: 100%;
+    background: red;
+
 }
 
 input:hover {
     cursor: pointer;
-}
+} 
