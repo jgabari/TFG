@@ -20,18 +20,6 @@ section {
     gap: 20px;
 }
 
-#buttons {
-    justify-content: space-between;
-    padding-top: 20px;
-}
-
-.buttons {
-    padding: 0px;
-    background-color: #fff;
-    border: 0px;
-    flex: none;
-}
-
 div {
     background-color: rgb(243, 243, 243);
     border-radius: 5px;
@@ -40,38 +28,38 @@ div {
     flex: 1;
 }
 
-#stats div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-width: 100px;
+div:hover {
+    background-color: rgb(240, 240, 240);
 }
-#stats #value {
+
+.stats div {
+    text-align: center;
+}
+
+.stats div:first-child {
     border-radius: 5px;
     background-color: rgb(35, 35, 35);
     color: whitesmoke;
 }
 
-#budget div {
+.stats div:first-child:hover {
+    background-color: rgb(40, 40, 40);
+}
+
+.budget div {
     min-width: 200px;
 }
 
-#budget div:hover {
-    background-color: rgb(240, 240, 240);
+.buttons {
+    justify-content: space-between;
+    padding-top: 20px;
 }
 
-#iterate_btn {
-    background-color: rgb(255, 50, 50);
-    color: whitesmoke;
-}
-
-#iterate_btn:hover {
-    background-color: rgb(255, 80, 80);
-}
-
-#iterate_btn:active {
-    background-color: rgb(200, 0, 0);
+.buttons div {
+    padding: 0px;
+    background-color: #fff;
+    border: 0px;
+    flex: none;
 }
 
 button {
@@ -89,9 +77,22 @@ button:active {
     background-color: black;
 }
 
+#iterate_btn {
+    background-color: rgb(255, 50, 50);
+    color: whitesmoke;
+}
+
+#iterate_btn:hover {
+    background-color: rgb(255, 80, 80);
+}
+
+#iterate_btn:active {
+    background-color: rgb(200, 0, 0);
+}
+
 input {
     width: 100%;
-    background: red;
+    accent-color: rgb(255, 50, 50);
 
 }
 
