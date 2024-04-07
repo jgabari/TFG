@@ -19,19 +19,9 @@ const pagina_error = `
 </html>
 `
 
-// const FICHERO_JSON = 'state.json';
-// let state_json = fs.readFileSync(FICHERO_JSON);
-// let state = JSON.parse(state_json);
 
 //Inicialización de variables
 let fichero = '';
-let nickname = '';
-let password = '';
-let money = 1000;
-let money_encoded = '';
-let squares = [];
-let squares_encoded = '';
-let cookie = '';
 
 const server = http.createServer((req, res) => {
 
@@ -47,23 +37,6 @@ const server = http.createServer((req, res) => {
     const url = new URL(req.url, 'http://' + req.headers['host']);
     console.log('RECURSO PEDIDO: ' + url.pathname);
 
-
-
-    //Extraigo las cookies si las hay
-    // cookie = req.headers.cookie;
-    // if (cookie) {
-    //     let pares = cookie.split(';');
-    //     pares.forEach((element, index) => {
-    //         let [nombre, valor] = element.split('=');
-    //         if (nombre.trim() === 'nickname') {
-    //             nickname = valor;
-    //         } else if (nombre.trim() === 'password') {
-    //             password = valor;
-    //         } else if (nombre.trim() === 'money') {
-    //             money = parseInt(valor);
-    //         }
-    //     });
-    // }
 
     // Saco el nombre del fichero que tengo que buscar
     if (url.pathname=='/') {
