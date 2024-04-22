@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
+    <link rel="stylesheet" href="style.css">
+    <title>TechDebt</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/node-webkit/0.10.3/node-webkit.min.js"></script>
+    <script src="game2.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <h1>Project evolution simulator</h1>
+        <h2>Stats</h2>
+        <section class="stats">
+            <div>
+                <b>Value</b><br>
+                <span id="value_display"></span>
+            </div>
+            <div>
+                <b>Features</b><br>
+                <span id="features_display"></span>
+            </div>
+            <div>
+                <b>Bugs</b><br>
+                <span id="bugs_display"></span>
+            </div>
+            <div>
+                <b>Health</b><br>
+                <span id="health_display"></span>
+            </div>
+        </section>
+        <h2>Budget</h2>
+        <section class="budget">
+            <div>
+                <b>Available: </b><br>
+                <span id="budget_display"></span>
+            </div>
+            <div>
+                <p>
+                    <label for="features_input">Features: <output id="features_percent"></output>%(<output
+                            id="features_value"></output>)</label><br>
+                    <input type="range" name="Add Features" id="features_input" class="slider" min="0" max="100"
+                        step="1" value="0">
+                </p>
+                <p>
+                    <label for="bugs_input">Bugs: <output id="bugs_percent"></output>%(<output
+                            id="bugs_value"></output>)</label><br>
+                    <input type="range" name="Fix Bugs" id="bugs_input" class="slider" min="0" max="100" step="1"
+                        value="0">
+                </p>
+                <p>
+                    <label for="refactor_input">Refactor: <output id="refactor_percent"></output>%(<output
+                            id="refactor_value"></output>)</label><br>
+                    <input type="range" name="Improve Health" id="refactor_input" class="slider" min="0" max="100"
+                        step="1" value="0">
+                </p>
+            </div>
+        </section>
+        <section class="buttons">
+            <div>
+                <button id="iterate_btn">Iterate</button>
+                <button id="reset_btn">Reset</button>
+            </div>
+            <div>
+                <button id="download_btn">Download state</button>
+                <button id="upload_btn">Upload state</button>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
