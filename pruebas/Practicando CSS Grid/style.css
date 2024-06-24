@@ -1,0 +1,25 @@
+body {
+    margin: 8px;
+    box-sizing: border-box;
+}
+
+.container {
+    overflow: hidden;
+    resize: both;
+    width: 500px;
+    height: 500px;
+    background: lightgray;
+    border: 2px solid black;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-rows: minmax(100px, 1fr);
+
+}
+
+.box {
+    background: darkred;
+    border: 1px solid black;
+    border-radius: 5px;
+    aspect-ratio: 1;
+}
