@@ -4,9 +4,10 @@
  */
 class SimSys {
     // Operational ranges of the system.
-    MAX_HEALTH = 1;
+    MAX_HEALTH = 100;
     MIN_HEALTH = 0;
     MIN_BUGS = 0;
+
 
     /**
      * Constructor with default values.
@@ -15,20 +16,20 @@ class SimSys {
         // Default configuration for the simulation.
         this.config = {
             init: {
-                budget: 10,
-                features: 10,
+                budget: 100,
+                features: 0,
                 bugs: 0,
-                health: 1,
+                health: 100,
             },
             factors: {
-                l: 0.1, // Lehman's Law: inherent degradation
-                re: 0.1, // Refactoring effectiveness
-                fae: 0.1, // Feature addition effectiveness
-                bfe: 0.1, // Bug-fix effectiveness
-                nbp: 0.1, // New bug proneness
-                vf: 0.1, // Value generated per feature
-                vb: 0.1, // Value lost per bug
-                bm: 0.1, // Budget multiplier
+                l: 1, // Lehman's Law: inherent degradation
+                re: 1, // Refactoring effectiveness
+                fae: 1, // Feature addition effectiveness
+                bfe: 1, // Bug-fix effectiveness
+                nbp: 1, // New bug proneness
+                vf: 1, // Value generated per feature
+                vb: 1, // Value lost per bug
+                bm: 1, // Budget multiplier
             },
         };
         this.resetSimulation();
@@ -83,14 +84,9 @@ class SimSys {
         const b = this.budget; // Current budget
         const s = this.stats; // Current stats
 
-        console.log(b.available);
-        console.log(typeof b.available);
-        console.log(b.feature);
-        console.log(b.bugfix);
-        console.log(b.refactor);
-        if (b.available !== b.feature + b.bugfix + b.refactor) {
-            throw new Error("Budget is not valid.");
-        }
+        // if (b.available !== b.feature + b.bugfix + b.refactor) {
+        //     throw new Error("Budget is not valid.");
+        // }
 
         this.iteration++;
 
@@ -173,8 +169,8 @@ class SimSys {
                 }
             }
         }
-        percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
-        values.forEach((id, i) => document.getElementById(id).textContent = mySys.round((sliders[i].value*mySys.budget.available/100), 2));
+        //percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+        values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
         if (prevInputs[prevInputs.length - 1] !== ev.target) {
             prevInputs.push(ev.target);
         }
@@ -208,7 +204,7 @@ const budget_display = document.getElementById("budget_display");
 let inputs = ["features_input", "bugs_input", "refactor_input"];
 let sliders = inputs.map(id => document.getElementById(id));
 let values = inputs.map(id => id.replace("input", "value"));
-let percents = inputs.map(id => id.replace("input", "percent"));
+//let percents = inputs.map(id => id.replace("input", "percent"));
 // Initial situation
 let mySys = new SimSys();
 
@@ -238,8 +234,8 @@ iterate_btn.addEventListener("click", function () {
 reset_btn.addEventListener("click", function () {
     mySys.resetSimulation();
     sliders.forEach(slider => slider.value = 0);
-    percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
-    values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value*mySys.budget.available/100);
+    //percents.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
+    values.forEach((id, i) => document.getElementById(id).textContent = sliders[i].value);
     document.cookie = mySys.toString();
 })
 
@@ -261,6 +257,7 @@ upload_btn.addEventListener("click", function () {
             mySys.config = data.config;
             mySys.stats = data.stats;
             mySys.budget = data.budget;
+            mySys.updateDisplays();
         })
         .catch(error => {
             console.log("ERROR: " + error);
