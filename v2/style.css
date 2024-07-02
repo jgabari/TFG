@@ -23,8 +23,8 @@ section {
 div {
     background-color: rgb(243, 243, 243);
     border-radius: 5px;
-    border: 1px solid lightgray;
     padding: 20px;
+    box-shadow: 0 2px 3px 0 hsla(0, 0%, 0%, 0.1);
     flex: 1;
 }
 
@@ -58,14 +58,15 @@ div:hover {
 .buttons div {
     padding: 0px;
     background-color: #fff;
-    border: 0px;
+    box-shadow: none;
     flex: none;
 }
 
 button {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid lightgray;
+    border: 0px;
+    box-shadow: 0 2px 3px 0 hsla(0, 0%, 0%, 0.1);
 }
 
 button:hover {
