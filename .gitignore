@@ -1,3 +1,5 @@
 v2/state.json
 *.zip
 prueba.html
+package-lock.json
+node_modules
