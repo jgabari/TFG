@@ -1,22 +1,22 @@
-const grid = document.getElementById("grid")
+const grid = document.getElementById('grid')
 
-function addBox() {
-    if (grid.children.length >= 25) return
+function addBox () {
+  if (grid.children.length >= 25) return
 
-    const box = document.createElement('div')
-    box.classList.add('box')
+  const box = document.createElement('div')
+  box.classList.add('box')
 
-    document.startViewTransition
-        ? document.startViewTransition(() => grid.appendChild(box))
-        : grid.appendChild(box)
+  document.startViewTransition
+    ? document.startViewTransition(() => grid.appendChild(box))
+    : grid.appendChild(box)
 }
 
-function removeBox() {
-    if (grid.children.length <= 1) return
+function removeBox () {
+  if (grid.children.length <= 1) return
 
-    const box = grid.querySelector(':scope > :last-child')
+  const box = grid.querySelector(':scope > :last-child')
 
-    document.startViewTransition
-        ? document.startViewTransition(() => grid.removeChild(box))
-        : grid.removeChild(box)
+  document.startViewTransition
+    ? document.startViewTransition(() => grid.removeChild(box))
+    : grid.removeChild(box)
 }
