@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  border: 2px solid black;
+  display: grid;
+  gap: 10px;
+  /* Espacio entre las cajas */
+  width: 500px;
+  /* Ancho fijo */
+  height: 500px;
+  /* Alto fijo */
+  padding: 10px;
+  overflow: auto;
+}
+
+.box {
+  background-color: lightblue;
+  aspect-ratio: 1;
+  /* Mantiene las cajas cuadradas */
+}
+
+footer.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
