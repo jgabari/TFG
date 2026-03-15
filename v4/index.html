@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechDebt Simulator v4</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="game.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>TechDebt Sim <span style="font-size:0.5em; opacity:0.6">v4</span></h1>
+        </div>
+        <div class="stat-group">
+            <div class="stat-item">
+                <span class="stat-label">Value</span>
+                <span class="stat-value" id="value_display">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Budget</span>
+                <span class="stat-value" id="budget_display">100</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Features</span>
+                <span class="stat-value" id="features_display">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Bugs</span>
+                <span class="stat-value" id="bugs_display">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Health</span>
+                <span class="stat-value" id="health_display">100%</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- The visual grid of modules goes here -->
+        <div id="project-grid"></div>
+    </main>
+
+    <footer>
+        <div class="controls-container">
+            <div class="sliders-group">
+                <div class="slider-row">
+                    <label for="features_input">Features</label>
+                    <input type="range" id="features_input" min="0" max="100" step="1" value="0">
+                    <span id="features_value">0</span>
+                </div>
+                <div class="slider-row">
+                    <label for="bugs_input">Fix Bugs</label>
+                    <input type="range" id="bugs_input" min="0" max="100" step="1" value="0">
+                    <span id="bugs_value">0</span>
+                </div>
+                <div class="slider-row">
+                    <label for="refactor_input">Refactor</label>
+                    <input type="range" id="refactor_input" min="0" max="100" step="1" value="0">
+                    <span id="refactor_value">0</span>
+                </div>
+            </div>
+
+            <div class="actions-group">
+                <button id="reset_btn">Reset</button>
+                <button id="iterate_btn">Iterate Space</button>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

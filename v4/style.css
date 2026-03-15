@@ -1,0 +1,177 @@
+:root {
+  --bg-color: #121212;
+  --surface-color: #1e1e1e;
+  --primary-color: #00e676; /* Bright Green */
+  --error-color: #ff5252;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --grid-gap: 4px;
+  --module-size: 16px;
+  
+  /* Dynamic Game Variables */
+  --system-health: 1; /* 0 to 1 */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Header / Stats HUD */
+header {
+  background-color: var(--surface-color);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+.stat-group {
+  display: flex;
+  gap: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-bottom: 0.25rem;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-feature-settings: 'tnum'; /* Tabular numbers avoid jitter */
+}
+
+/* Main Game Area */
+main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--grid-gap);
+  width: 100%;
+  max-width: 1200px;
+  align-content: flex-start;
+}
+
+/* The actual "Features" or "Modules" */
+.module {
+  width: var(--module-size);
+  height: var(--module-size);
+  border-radius: 2px;
+  background-color: var(--primary-color);
+  
+  /* 
+     Visualizing Health:
+     We use the CSS variable --system-health (set by JS) to affect opacity and saturation.
+     Health 100% -> Opacity 1, High Saturation
+     Health 0% -> Opacity 0.3, Low Saturation (grey/brown)
+  */
+  opacity: calc(0.2 + (0.8 * var(--system-health)));
+  filter: sepia(calc(1 - var(--system-health))) grayscale(calc(0.5 * (1 - var(--system-health))));
+  
+  transition: all 0.3s ease;
+  box-shadow: 0 0 calc(5px * var(--system-health)) var(--primary-color);
+}
+
+/* Footer / Controls */
+footer {
+  background-color: var(--surface-color);
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #333;
+}
+
+.controls-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.sliders-group {
+  display: grid;
+  gap: 1rem;
+}
+
+.slider-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px;
+  align-items: center;
+  gap: 1rem;
+}
+
+label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+input[type=range] {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+}
+
+.actions-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+button {
+  background-color: #333;
+  color: white;
+  border: 1px solid #444;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+button#iterate_btn {
+  background-color: var(--primary-color);
+  color: #000;
+  border: none;
+}
+
+button#iterate_btn:hover {
+  filter: brightness(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .controls-container {
+    grid-template-columns: 1fr;
+  }
+}

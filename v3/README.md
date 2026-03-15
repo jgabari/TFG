@@ -1,0 +1,1 @@
+Juego web simulador de proyectos que busca representar el concepto de Deuda Técnica.
